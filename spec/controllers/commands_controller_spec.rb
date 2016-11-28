@@ -1,15 +1,11 @@
 require 'rails_helper'
-#require 'dry/system/container'
 
 describe 'CommandsController', type: :controller do
   let(:hello_world_command) { double("command") }
   let(:my_logger) { double("command") }
 
   before do
-    TestContainer.register 'hello_world', hello_world_command
-    TestContainer.register 'my_logger', my_logger
-
-    @controller = CommandsController.new
+    @controller = CommandsController.new(my_logger: my_logger, hello_world_command: hello_world_command)
 
     allow(my_logger).to receive(:call).with(anything)
     allow(hello_world_command).to receive(:call).with(anything)
